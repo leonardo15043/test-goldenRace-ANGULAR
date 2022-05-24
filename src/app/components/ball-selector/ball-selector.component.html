@@ -1,0 +1,7 @@
+<div class="container">
+    <label class="title">Seleccione un número para comenzar</label>
+    <div class="list-ball">
+        <div class="ball" *ngFor="let ball of balls" [style.background-color]="ball.color" (click)="selectBall(ball)">{{ ball.value }}</div>
+    </div>
+    <app-bet-slip [refBallEvent]="ballEvent"></app-bet-slip>
+</div>
