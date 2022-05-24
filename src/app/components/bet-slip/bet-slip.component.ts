@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Ball } from 'src/app/models/game.interface';
+import { Ball, ConfigurationGame } from 'src/app/models/game.interface';
 import { GameService } from 'src/app/services/game.service';
 
 @Component({
@@ -22,10 +22,12 @@ export class BetSlipComponent implements OnInit {
   private formBuilder: FormBuilder = new FormBuilder;
   public betForm!: FormGroup;
   public isSubmit:boolean = false;
+  public configGame!: ConfigurationGame;
   
   constructor(
     private _gameService:GameService
   ) {
+    this.configurationGame();
   }
 
   ngOnInit(): void {
@@ -34,13 +36,19 @@ export class BetSlipComponent implements OnInit {
       this.startCountBet = false;
       this.endBet = false;
       this.isSubmit = false;
-      this.setupFrom();
+      this.setupForm();
     });
   }
 
-  private setupFrom(){
+  private setupForm(){
     this.betForm = this.formBuilder.group({
-      valueBet:['',[ Validators.required, Validators.min(5), Validators.pattern(/^([0-9-.,])+$/)]]
+      valueBet:['',[ Validators.required, Validators.min(this.configGame.minimumAmount), Validators.pattern(/^([0-9-.,])+$/)]]
+    });
+  }
+
+  private configurationGame(){
+    this._gameService.configurationGame().subscribe( (game:ConfigurationGame)=>{
+      this.configGame = game;
     });
   }
 
@@ -49,7 +57,6 @@ export class BetSlipComponent implements OnInit {
    */
   startBet(){
     this.isSubmit = true;
-    console.log(this.betForm);
     if(this.betForm.valid){
       this.startCountBet = true;
       this._gameService.getBalls().subscribe( ( balls:Ball[] ) =>{
@@ -58,7 +65,7 @@ export class BetSlipComponent implements OnInit {
           this.count++;
           const ball = balls.filter( ball => ball.id == this.count);
           this.ballBet = ball[0];
-         }, 100);
+         }, this.configGame.speedBall);
       }); 
     }
   }
@@ -83,7 +90,7 @@ export class BetSlipComponent implements OnInit {
   /*
    * Reset the game values to start over
    */
-  resetbet(){
+  resetBet(){
     this.count = 1;
     this.startCountBet = false;
     this.endBet = false;

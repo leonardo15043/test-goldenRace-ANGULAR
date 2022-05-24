@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Ball } from '../models/game.interface';
+import { Ball, ConfigurationGame } from '../models/game.interface';
 
 @Injectable({
     providedIn: 'root'
@@ -15,6 +15,14 @@ export class GameService {
     constructor(
         private http: HttpClient
     ) { }
+
+    /**
+     * General settings of the entire game
+     * @returns {Observable<ConfigurationGame>}
+     */
+    configurationGame():Observable<ConfigurationGame>{
+        return this.http.get<ConfigurationGame>('/api/game');
+    }
 
     /**
      * Get the list of game balls

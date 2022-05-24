@@ -22,6 +22,6 @@
    <div class="result-bet" *ngIf="endBet">
       <div class="ball bigBall" *ngIf="startCountBet && ballResult" [style.background-color]="ballResult.color">{{ ballResult.value }}</div>
       <label class="txtConfirmation" [ngClass]="(stateBet.state == 1) ? 'won': 'miss' ">{{ (stateBet.state == 1) ? 'Ganaste': 'Perdiste' }}</label>
-      <button class="btn" (click)="resetbet()">Intentar de nuevo</button>
+      <button class="btn" (click)="resetBet()">Intentar de nuevo</button>
    </div>  
 </div>

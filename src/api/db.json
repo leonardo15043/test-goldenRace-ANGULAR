@@ -1,4 +1,7 @@
 {
+  "game":{
+    "id":1,"speedBall":100, "minimumAmount":5
+  },
   "balls": [
     { "id":1,"value":1,"color":"#ff4318"},
     { "id":2,"value":2,"color":"#ffe4ab"},
