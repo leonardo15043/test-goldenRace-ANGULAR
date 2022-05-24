@@ -133,3 +133,9 @@ html,body{
 .miss{
     color: red;
 }
+.error-message{
+    color: red;
+    margin-bottom: -20px;
+    font-size: 12px;
+    display: contents;
+}

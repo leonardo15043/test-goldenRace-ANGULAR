@@ -4,8 +4,15 @@
    </div> 
    <div class="col">
       <div class="input-btn">
-         <input class="form-input inputFlt inputBet" name="valueBet" placeholder="Valor de la apuesta">
-         <button class="btn btnFlt btnBet" (mousedown)="startBet()" (mouseup)="stopBet()" (mouseout)="stopBet()" [disabled]="endBet">Apostar</button>
+         <form [formGroup]="betForm" >
+            <input class="form-input inputFlt inputBet" formControlName="valueBet" name="valueBet" id="valueBet" placeholder="Valor de la apuesta">
+            <button class="btn btnFlt btnBet" type="button" (mousedown)="startBet()" (mouseup)="stopBet()" (mouseout)="stopBet()" [disabled]="endBet">Apostar</button>
+         </form>
+      </div>
+      <div *ngIf="betForm.get('valueBet')?.dirty || isSubmit">
+         <div class="error-message" *ngIf="betForm.get('valueBet')?.hasError('min')"> El valor minimo permitido es de 5 €</div>
+         <div class="error-message" *ngIf="betForm.get('valueBet')?.hasError('required')"> Es nesesario ingresar el valor de la apuesta </div>
+         <div class="error-message" *ngIf="betForm.get('valueBet')?.hasError('pattern')"> El valor ingresado no es correcto </div>
       </div>
       <div class="msj-alert">Mantenga el botón <b>Apostar</b> presionado para comenzar su apuesta</div>
    </div>

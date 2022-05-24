@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Ball } from 'src/app/models/game.interface';
 import { GameService } from 'src/app/services/game.service';
 
@@ -18,6 +19,9 @@ export class BetSlipComponent implements OnInit {
   public startCountBet = false;
   public endBet = false;
   public stateBet:any = {};
+  private formBuilder: FormBuilder = new FormBuilder;
+  public betForm!: FormGroup;
+  public isSubmit:boolean = false;
   
   constructor(
     private _gameService:GameService
@@ -29,6 +33,14 @@ export class BetSlipComponent implements OnInit {
       this.selectBall = ball;
       this.startCountBet = false;
       this.endBet = false;
+      this.isSubmit = false;
+      this.setupFrom();
+    });
+  }
+
+  private setupFrom(){
+    this.betForm = this.formBuilder.group({
+      valueBet:['',[ Validators.required, Validators.min(5), Validators.pattern(/^([0-9-.,])+$/)]]
     });
   }
 
@@ -36,15 +48,19 @@ export class BetSlipComponent implements OnInit {
    * The counting of the balls begins the method "mousedown"
    */
   startBet(){
-    this.startCountBet = true;
-    this._gameService.getBalls().subscribe( ( balls:Ball[] ) =>{
-      this.interval = setInterval( () =>{
-        if(this.count == balls.length) this.count = 1;
-        this.count++;
-        const ball = balls.filter( ball => ball.id == this.count);
-        this.ballBet = ball[0];
-       }, 100);
-    }); 
+    this.isSubmit = true;
+    console.log(this.betForm);
+    if(this.betForm.valid){
+      this.startCountBet = true;
+      this._gameService.getBalls().subscribe( ( balls:Ball[] ) =>{
+        this.interval = setInterval( () =>{
+          if(this.count == balls.length) this.count = 1;
+          this.count++;
+          const ball = balls.filter( ball => ball.id == this.count);
+          this.ballBet = ball[0];
+         }, 100);
+      }); 
+    }
   }
 
   /*
