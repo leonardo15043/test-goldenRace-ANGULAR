@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Ball, ConfigurationGame } from '../models/game.interface';
+import { Ball, ConfigurationGame, ControlGame } from '../models/game.interface';
 
 @Injectable({
     providedIn: 'root'
@@ -22,6 +22,10 @@ export class GameService {
      */
     configurationGame():Observable<ConfigurationGame>{
         return this.http.get<ConfigurationGame>('/api/game');
+    }
+
+    saveGame( game:ControlGame ):Observable<ControlGame>{
+        return this.http.post<ControlGame>(`/api/resultGame`, game);
     }
 
     /**

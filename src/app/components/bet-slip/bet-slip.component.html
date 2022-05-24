@@ -1,27 +1,27 @@
-<div class="content-bet" *ngIf="selectBall?.id">
+<div class="content-bet" *ngIf="controlGame.control.selectBall?.id">
    <div class="col">
-    <div class="ball" [style.background-color]="selectBall.color">{{ selectBall.value }}</div>
+    <div class="ball" [style.background-color]="controlGame.control.selectBall?.color">{{ controlGame.control.selectBall?.value }}</div>
    </div> 
    <div class="col">
       <div class="input-btn">
          <form [formGroup]="betForm" >
             <input class="form-input inputFlt inputBet" formControlName="valueBet" name="valueBet" id="valueBet" placeholder="Valor de la apuesta">
-            <button class="btn btnFlt btnBet" type="button" (mousedown)="startBet()" (mouseup)="stopBet()" (mouseout)="stopBet()" [disabled]="endBet">Apostar</button>
+            <button class="btn btnFlt btnBet" type="button" (mousedown)="startBet()" (mouseup)="stopBet()" (mouseout)="stopBet()" [disabled]="controlGame.control.endBet">Apostar</button>
          </form>
       </div>
-      <div *ngIf="betForm.get('valueBet')?.dirty || isSubmit">
-         <div class="error-message" *ngIf="betForm.get('valueBet')?.hasError('min')"> El valor minimo permitido es de 5 €</div>
+      <div *ngIf="betForm.get('valueBet')?.dirty || controlGame.control.isSubmit">
+         <div class="error-message" *ngIf="betForm.get('valueBet')?.hasError('min')"> El valor minimo permitido es de {{ configGame.minimumAmount }} €</div>
          <div class="error-message" *ngIf="betForm.get('valueBet')?.hasError('required')"> Es nesesario ingresar el valor de la apuesta </div>
          <div class="error-message" *ngIf="betForm.get('valueBet')?.hasError('pattern')"> El valor ingresado no es correcto </div>
       </div>
       <div class="msj-alert">Mantenga el botón <b>Apostar</b> presionado para comenzar su apuesta</div>
    </div>
    <div class="col">
-      <div class="ball" *ngIf="startCountBet && ballBet" [style.background-color]="ballBet.color">{{ ballBet.value }}</div>
+      <div class="ball" *ngIf="controlGame.control.startCountBet && controlGame.control.ballBet" [style.background-color]="controlGame.control.ballBet.color">{{ controlGame.control.ballBet.value }}</div>
    </div>
-   <div class="result-bet" *ngIf="endBet">
-      <div class="ball bigBall" *ngIf="startCountBet && ballResult" [style.background-color]="ballResult.color">{{ ballResult.value }}</div>
-      <label class="txtConfirmation" [ngClass]="(stateBet.state == 1) ? 'won': 'miss' ">{{ (stateBet.state == 1) ? 'Ganaste': 'Perdiste' }}</label>
+   <div class="result-bet" *ngIf="controlGame.control.endBet">
+      <div class="ball bigBall" *ngIf="controlGame.control.startCountBet && controlGame.control.ballResult" [style.background-color]="controlGame.control.ballResult.color">{{ controlGame.control.ballResult.value }}</div>
+      <label class="txtConfirmation" [ngClass]="(controlGame.control.state) ? 'won': 'miss' ">{{ (controlGame.control.state) ? 'Ganaste': 'Perdiste' }}</label>
       <button class="btn" (click)="resetBet()">Intentar de nuevo</button>
    </div>  
 </div>
