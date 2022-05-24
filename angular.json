@@ -17,6 +17,13 @@
       "sourceRoot": "src",
       "prefix": "app",
       "architect": {
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "eslintConfig": "eslintrc.json",
+            "lintFilePatterns": ["**/*.spec.ts", "**/*.ts"]
+          }
+        },
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
@@ -69,6 +76,10 @@
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "my-app:build",
+            "proxyConfig": "src/proxy.conf.json"
+          },
           "configurations": {
             "production": {
               "browserTarget": "test-goldenRace:build:production"

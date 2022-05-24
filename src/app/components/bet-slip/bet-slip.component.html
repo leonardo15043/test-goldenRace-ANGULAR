@@ -1,4 +1,4 @@
-<div class="content-bet" *ngIf="selectBall.id">
+<div class="content-bet" *ngIf="selectBall?.id">
    <div class="col">
     <div class="ball" [style.background-color]="selectBall.color">{{ selectBall.value }}</div>
    </div> 
@@ -10,10 +10,10 @@
       <div class="msj-alert">Mantenga el botón <b>Apostar</b> presionado para comenzar su apuesta</div>
    </div>
    <div class="col">
-      <div class="ball" *ngIf="startCountBet">{{ count }}</div>
+      <div class="ball" *ngIf="startCountBet && ballBet" [style.background-color]="ballBet.color">{{ ballBet.value }}</div>
    </div>
    <div class="result-bet" *ngIf="endBet">
-      <div class="ball bigBall" *ngIf="startCountBet">{{ count }}</div>
+      <div class="ball bigBall" *ngIf="startCountBet && ballResult" [style.background-color]="ballResult.color">{{ ballResult.value }}</div>
       <label class="txtConfirmation" [ngClass]="(stateBet.state == 1) ? 'won': 'miss' ">{{ (stateBet.state == 1) ? 'Ganaste': 'Perdiste' }}</label>
       <button class="btn" (click)="resetbet()">Intentar de nuevo</button>
    </div>  
