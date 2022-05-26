@@ -1,24 +1,25 @@
-import { Component, EventEmitter, OnInit } from '@angular/core';
+import { Component, EventEmitter } from '@angular/core';
 import { Ball } from 'src/app/models/game.interface';
+import { User } from 'src/app/models/user.interface';
+import { UserService } from 'src/app/services/user.service';
 import { GameService } from '../../services/game.service';
 
 @Component({
   selector: 'app-ball-selector',
-  templateUrl: './ball-selector.component.html',
-  styleUrls: ['./ball-selector.component.css']
+  templateUrl: './ball-selector.component.html'
 })
-export class BallSelectorComponent implements OnInit {
+export class BallSelectorComponent {
 
   ballEvent: EventEmitter<Ball> = new EventEmitter<Ball>();
   balls:Ball[] = [];
+  accumulated:number = 0;
 
   constructor(
-    private _gameService:GameService
+    private _gameService:GameService,
+    private _userService:UserService
   ) { 
     this.getAllBalls();
-  }
-
-  ngOnInit(): void {
+    this.getUser();
   }
 
   /**
@@ -36,6 +37,23 @@ export class BallSelectorComponent implements OnInit {
    */
   selectBall( ball:Ball ){
     this.ballEvent.emit(ball);
+  }
+
+  /**
+   * The @Output event is captured for the accumulated value of the user
+   * @param {number} event
+   */
+  accumulatedUser( event:number ){
+     this.accumulated = event;
+  }
+
+  /**
+   * Load the data of the user who currently has a token saved in the storage
+   */
+  getUser(){
+    this._userService.getUser(localStorage.getItem('token')!).subscribe( (user:User[])=>{
+      this.accumulated = (user[0]) ? user[0].accumulatedValue : 0;
+    });
   }
 
 }

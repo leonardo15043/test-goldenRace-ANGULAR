@@ -1,3 +1,8 @@
+/**
+ * Generate a random token
+ * @param {number} range 
+ * @returns {string}
+ */
 export function tokenGenerator( range:number ){
     let text = "";
     let possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";

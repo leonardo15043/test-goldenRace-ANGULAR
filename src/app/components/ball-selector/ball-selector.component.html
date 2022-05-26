@@ -3,5 +3,9 @@
     <div class="list-ball">
         <div class="ball" *ngFor="let ball of balls" [style.background-color]="ball.color" (click)="selectBall(ball)">{{ ball.value }}</div>
     </div>
-    <app-bet-slip [refBallEvent]="ballEvent"></app-bet-slip>
+    <app-bet-slip [refBallEvent]="ballEvent" (accumulatedValue)="accumulatedUser($event)"></app-bet-slip>
+</div>
+<div class="userGain">
+    <div class="title">Acumulado</div>
+    <div class="value"> {{ accumulated }}</div>
 </div>

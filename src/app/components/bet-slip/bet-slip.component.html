@@ -4,7 +4,7 @@
    </div> 
    <div class="col">
       <div class="input-btn">
-         <form [formGroup]="betForm" >
+         <form [formGroup]="betForm">
             <input class="form-input inputFlt inputBet" formControlName="valueBet" name="valueBet" id="valueBet" placeholder="Valor de la apuesta">
             <button class="btn btnFlt btnBet" type="button" (mousedown)="startBet()" (mouseup)="stopBet()" (mouseout)="stopBet()" [disabled]="controlGame.control.endBet">Apostar</button>
          </form>
@@ -20,7 +20,7 @@
       <div class="ball" *ngIf="controlGame.control.startCountBet && controlGame.control.ballBet" [style.background-color]="controlGame.control.ballBet.color">{{ controlGame.control.ballBet.value }}</div>
    </div>
    <div class="result-bet" *ngIf="controlGame.control.endBet">
-      <div class="ball bigBall" *ngIf="controlGame.control.startCountBet && controlGame.control.ballResult" [style.background-color]="controlGame.control.ballResult.color">{{ controlGame.control.ballResult.value }}</div>
+      <div class="ball bigBall" *ngIf="!controlGame.control.startCountBet" [style.background-color]="controlGame.control.ballBet?.color">{{ controlGame.control.ballBet?.value }}</div>
       <label class="txtConfirmation" [ngClass]="(controlGame.control.state) ? 'won': 'miss' ">{{ (controlGame.control.state) ? 'Ganaste': 'Perdiste' }}</label>
       <button class="btn" (click)="resetBet()">Intentar de nuevo</button>
    </div>  

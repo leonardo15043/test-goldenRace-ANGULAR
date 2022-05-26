@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { tokenGenerator } from 'src/app/core/helpers/utilities';
 import { Ball, ConfigurationGame, Game } from 'src/app/models/game.interface';
@@ -9,18 +9,19 @@ import { User } from '../../models/user.interface';
 
 @Component({
   selector: 'app-bet-slip',
-  templateUrl: './bet-slip.component.html',
-  styleUrls: ['./bet-slip.component.css']
+  templateUrl: './bet-slip.component.html'
 })
 export class BetSlipComponent implements OnInit {
 
   @Input() refBallEvent!: EventEmitter<Ball>;
+  @Output() accumulatedValue: EventEmitter<number> = new EventEmitter();
  
   private formBuilder: FormBuilder = new FormBuilder;
   public betForm!: FormGroup;
-
   public configGame!: ConfigurationGame;
   public controlGame = new Game();
+  private idUser:number | undefined;
+  public gainBetUser:number = 0;
   
   constructor(
     private _gameService:GameService,
@@ -46,6 +47,9 @@ export class BetSlipComponent implements OnInit {
     });
   }
 
+  /**
+   * Load the initial game configuration
+   */
   private configurationGame(){
     this._gameService.configurationGame().subscribe( ( game:ConfigurationGame )=>{
       this.configGame = game;
@@ -75,17 +79,17 @@ export class BetSlipComponent implements OnInit {
    */
   stopBet(){
     clearInterval(this.controlGame.control.interval);
-    if(this.controlGame.control.startCountBet) {
+    if(this.controlGame.control.startCountBet){
+      if(this.controlGame.control.selectBall?.value == this.controlGame.control.count){
+        this.controlGame.control.state = true;
+        this.controlGame.control.gainBet = this.configGame.gainBet;
+      } else {
+        this.controlGame.control.state = false;
+      }
       this.controlGame.control.endBet = true;
-      this.controlGame.control.state = false;
+      this.controlGame.control.startCountBet = false;
       this.saveBet();
     }
-    if(this.controlGame.control.selectBall?.value == this.controlGame.control.count){
-      this.controlGame.control.state = true;
-    } 
-    this._gameService.getBall( this.controlGame.control.count ).subscribe( ( ball:Ball ) =>{
-      this.controlGame.control.ballResult = ball;
-    })
   }
 
   /*
@@ -95,13 +99,22 @@ export class BetSlipComponent implements OnInit {
     this.controlGame = new Game();
   }
 
+  /**
+   * Save the result of the game when the user releases the "Bet" button
+   */
   saveBet(){
     if(!this.controlGame.control.endBet) return;
-    this._gameService.saveGame( this.controlGame.control ).subscribe(( game:ControlGame ) =>{
-      console.log(game);
+    this._gameService.saveGame( this.idUser, this.controlGame.control ).subscribe(( game:ControlGame ) =>{
+      if(game.state){
+        const valueBet = (this.gainBetUser+this.configGame.gainBet);
+        this.updateUser({ id:this.idUser,accumulatedValue:valueBet });
+      }
     });
   }
 
+  /**
+   * Save user information to keep a history
+   */
   saveUser(){
     const user = {
       creationDate: new Date(),
@@ -111,8 +124,25 @@ export class BetSlipComponent implements OnInit {
     if(!localStorage.getItem('token')){
       this._userService.saveUser(user).subscribe( (user:User)=>{
         localStorage.setItem('token',user.token);
+        this.idUser = user.id;
+      });
+    } else {
+      this._userService.getUser(localStorage.getItem('token')!).subscribe( (user:User[])=>{
+        this.idUser = user[0].id;
+        this.gainBetUser = user[0].accumulatedValue;
+        this.accumulatedValue.emit(user[0].accumulatedValue);
       });
     }
+  }
+
+  /**
+   * Update the user's earned value
+   * @param user 
+   */
+  updateUser( user:any ){
+    this._userService.updateUser( user ).subscribe( ( user:User)=>{
+      this.accumulatedValue.emit(user.accumulatedValue);
+    });
   }
 
 }

@@ -16,8 +16,31 @@ export class UserService {
         private http: HttpClient
     ) { }
 
+    /**
+     * Get the user information with the token
+     * @param {string} tokenUser 
+     * @returns {Observable<User[]>}
+     */
+    getUser( tokenUser:string ):Observable<User[]>{
+        return this.http.get<User[]>(`/api/users?token=${tokenUser}`);
+    }
+
+    /**
+     * Save user information
+     * @param {User} user 
+     * @returns {Observable<User>}
+     */
     saveUser( user:User ):Observable<User>{
         return this.http.post<User>(`/api/users`, user);
+    }
+
+    /**
+     * Update user information
+     * @param {User} user 
+     * @returns {Observable<User>}
+     */
+    updateUser( user:User ):Observable<User>{
+        return this.http.patch<User>(`/api/users/${user.id}`, user);
     }
 
 }

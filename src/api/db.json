@@ -59,23 +59,46 @@
   ],
   "resultGame": [
     {
-      "startCountBet": true,
+      "startCountBet": false,
       "endBet": true,
       "isSubmit": true,
       "state": false,
-      "count": 6,
+      "gainBet": 0,
+      "count": 8,
       "selectBall": {
+        "id": 4,
+        "value": 4,
+        "color": "#e1c0dd"
+      },
+      "interval": 60,
+      "ballBet": {
+        "id": 8,
+        "value": 8,
+        "color": "#e91e63"
+      },
+      "idUser": 4,
+      "id": 1
+    },
+    {
+      "startCountBet": false,
+      "endBet": true,
+      "isSubmit": true,
+      "state": false,
+      "gainBet": 0,
+      "count": 3,
+      "selectBall": {
+        "id": 4,
+        "value": 4,
+        "color": "#e1c0dd"
+      },
+      "interval": 77,
+      "ballBet": {
         "id": 3,
         "value": 3,
         "color": "#4c955d"
       },
-      "interval": 73,
-      "ballBet": {
-        "id": 6,
-        "value": 6,
-        "color": "#9ce3c4"
-      },
-      "id": 1
+      "idUser": 5,
+      "id": 2
     }
   ],
   "users": [
@@ -84,6 +107,29 @@
       "token": "cNjEG0QPktW7mMojuDmpzwtPnW11Qb",
       "accumulatedValue": 0,
       "id": 1
+    },
+    {
+      "creationDate": "2022-05-25T16:25:44.109Z",
+      "token": "K98G3cuNgrxX5L02lOueZln2rRCQdQ",
+      "accumulatedValue": 0,
+      "id": 2
+    },
+    {
+      "id": 3,
+      "accumulatedValue": 13.5,
+      "token": "Ti8oaKHroYWTdbdbMLFHv7eLMkEwNT"
+    },
+    {
+      "creationDate": "2022-05-26T00:26:15.335Z",
+      "token": "WuZO10QhxVEX3jKKm5TzYcjguVa62c",
+      "accumulatedValue": 25.5,
+      "id": 4
+    },
+    {
+      "creationDate": "2022-05-26T02:21:21.235Z",
+      "token": "pNbQBXebJhD7v6lLMNYpThGRBOSHAp",
+      "accumulatedValue": 0,
+      "id": 5
     }
   ]
 }

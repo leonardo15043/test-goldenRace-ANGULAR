@@ -12,6 +12,7 @@ export interface ConfigurationGame{
 }
 
 export interface ControlGame{
+    idUser?:number | undefined,
     startCountBet:boolean,
     endBet:boolean,
     isSubmit:boolean,
@@ -20,6 +21,7 @@ export interface ControlGame{
     ballBet?:Ball,
     ballResult?:Ball,
     count:number,
+    gainBet:number,
     interval?:any,
 }
 
@@ -28,6 +30,7 @@ const defaultControls:ControlGame = {
     endBet:false,
     isSubmit:false,
     state:undefined,
+    gainBet:0,
     count:1
 }
 
