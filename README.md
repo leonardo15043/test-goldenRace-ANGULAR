@@ -1,27 +1,82 @@
-# TestGoldenRace
+<p align="center"><a href="https://goldenrace.com/es" target="_blank"><img src="https://goldenrace.com/images/logo.png" width="400"></a></p>
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.0.3.
 
-## Development server
+## Test GoldenRace
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Este proyecto es un juego de lotería desarrollado en Angular que inicialmente está configurado con 10 bolas, la idea es apostar un valor mínimo de 5 € y si coincide la bola que selecciono con la del sistema del juego la ganancia será de 1.5.
 
-## Code scaffolding
+### Adicionales 
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+- Se mejoró la interfaz gráfica en UX y UI
+- Guardado del historial de apuestas por usuario mediante un token.
+- Configuración del juego 
 
-## Build
+### Instalación y configuración 
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+- Tener todo el ambiente de desarrollo, esto incluye tener node js y un IDE de desarrollo
+- Clonar el repositorio en nuestro computador 
+- Nos dirigimos a la carpeta de nuestro proyecto por consola y ejecutamos el siguiente comando para instalar las dependencias de npm 
 
-## Running unit tests
+    ```npm install```
+    
+- Esta aplicación como fuente de información usa unos servicios locales que funcionan con [JSON Server](https://www.npmjs.com/package/json-server), la estructura de datos esta en **src/api/db.json**
+- Para ejecutar nuestra api local solo debemos ir a la ruta **src/api/** y ejecutar el comando ```json-server db.json --routes routes.json```, por lo general debería ejecutar en el puerto **3000** pero si no es asi debemos cambiar el puerto en el archivo **proxy.conf.json** para evitar errores de **CORS**
+- luego ejecutamos nuestro proyecto para que se visualice en el navegador con el comando 
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+   ```ng serve```
+   
+### Lista de servicios
 
-## Running end-to-end tests
+#### Configuración del juego   
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+ **GET** ```http://localhost:3000/api/game```
 
-## Further help
+  Con este servicio podemos ver la configuración de:
+  - La velocidad del intervalo de cada bola
+  - El monto mínimo que el usuario puede apostar
+  - El valor de ganancia por cada apuesta
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+#### Guardar apuesta
+
+  **POST** ```http://localhost:3000/api/resultGame```
+  
+  Este servicio nos sirve para guardar el resultado final de la apuesta enviando los datos de tipo **ControlGame**
+  
+#### Listado de bolas
+
+  **GET** ```http://localhost:3000/api/balls```
+  
+  Trae el listado de bolas para comenzar el juego , cada bola tiene su valor y color correspondiente, si queremos agregar más bolas podemos usar el servicios 
+  **POST** ```http://localhost:3000/api/balls``` enviando la data correspondiente de la interfaz **Ball**
+  
+#### Ver bola
+
+  **GET** ```http://localhost:3000/api/balls/${idBall}```
+  
+  Trae la información correspondiente de una bola
+  
+#### Mostrar información de un usuario 
+
+  **GET** ```http://localhost:3000/api/users?token=${tokenUser}```
+  
+  Con el token que se guarda en el **storage** podemos consultar la información de un usuario  
+  
+#### Guardar información de un usuario 
+
+  **POST** ```http://localhost:3000/api/users```
+  
+  Guarda la información del usuario de tipo **User**
+  
+#### Actualizar información de un usuario 
+
+  **PATCH** ```http://localhost:3000/api/users```
+  
+  Este servicio sirve para actualizar la información del usuario pero en concreto para el alcance de este proyecto se usa para actualizar el valor acumulado del usuario
+  
+## Recomendaciones
+
+- si hacemos un cambio directo en la base de datos del sistema debemos parar el proceso y volverlo a ejecutar
+- si ya hemos apostado y queremos apostar con un usuario nuevo debemos eliminar el token del storage y refrescar la página 
+
+
+
