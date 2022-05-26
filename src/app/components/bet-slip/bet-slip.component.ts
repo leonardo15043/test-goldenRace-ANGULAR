@@ -104,7 +104,7 @@ export class BetSlipComponent implements OnInit {
    */
   saveBet(){
     if(!this.controlGame.control.endBet) return;
-    this._gameService.saveGame( this.idUser, this.controlGame.control ).subscribe(( game:ControlGame ) =>{
+    this._gameService.saveGame( this.idUser!, this.controlGame.control ).subscribe(( game:ControlGame ) =>{
       if(game.state){
         const valueBet = (this.gainBetUser+this.configGame.gainBet);
         this.updateUser({ id:this.idUser,accumulatedValue:valueBet });

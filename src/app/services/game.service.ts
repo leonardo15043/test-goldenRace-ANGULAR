@@ -24,7 +24,13 @@ export class GameService {
         return this.http.get<ConfigurationGame>('/api/game');
     }
 
-    saveGame( id:number | undefined, game:ControlGame ):Observable<ControlGame>{
+    /**
+     * Save the game result
+     * @param {number} id 
+     * @param {ControlGame} game 
+     * @returns {Observable<ControlGame>}
+     */
+    saveGame( id:number, game:ControlGame ):Observable<ControlGame>{
         const result = {...game, ...{ idUser: id }};
         return this.http.post<ControlGame>(`/api/resultGame`, result);
     }
