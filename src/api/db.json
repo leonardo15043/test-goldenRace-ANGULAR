@@ -64,41 +64,41 @@
       "isSubmit": true,
       "state": false,
       "gainBet": 0,
-      "count": 8,
+      "count": 9,
       "selectBall": {
         "id": 4,
         "value": 4,
         "color": "#e1c0dd"
       },
-      "interval": 60,
+      "interval": 84,
       "ballBet": {
-        "id": 8,
-        "value": 8,
-        "color": "#e91e63"
+        "id": 9,
+        "value": 9,
+        "color": "#9fe91e"
       },
-      "idUser": 4,
-      "id": 1
+      "idUser": 6,
+      "id": 4
     },
     {
       "startCountBet": false,
       "endBet": true,
       "isSubmit": true,
-      "state": false,
-      "gainBet": 0,
-      "count": 3,
+      "state": true,
+      "gainBet": 1.5,
+      "count": 5,
       "selectBall": {
-        "id": 4,
-        "value": 4,
-        "color": "#e1c0dd"
+        "id": 5,
+        "value": 5,
+        "color": "#f3c465"
       },
-      "interval": 77,
+      "interval": 111,
       "ballBet": {
-        "id": 3,
-        "value": 3,
-        "color": "#4c955d"
+        "id": 5,
+        "value": 5,
+        "color": "#f3c465"
       },
-      "idUser": 5,
-      "id": 2
+      "idUser": 6,
+      "id": 5
     }
   ],
   "users": [
@@ -130,6 +130,12 @@
       "token": "pNbQBXebJhD7v6lLMNYpThGRBOSHAp",
       "accumulatedValue": 0,
       "id": 5
+    },
+    {
+      "creationDate": "2022-05-30T19:53:04.742Z",
+      "token": "XspSyaMsegeyDq17AzKuXVZLkyp183",
+      "accumulatedValue": 1.5,
+      "id": 6
     }
   ]
 }

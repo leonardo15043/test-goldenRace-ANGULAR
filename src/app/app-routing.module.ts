@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { BallSelectorComponent } from './components/ball-selector/ball-selector.component';
 import { BetSlipComponent } from './components/bet-slip/bet-slip.component';
 
-const routes: Routes = [
+const routes:Routes = [
   {
     path: '',
     redirectTo: 'ball-selector',

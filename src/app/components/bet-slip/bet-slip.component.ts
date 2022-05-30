@@ -21,7 +21,7 @@ export class BetSlipComponent implements OnInit {
   public configGame!: ConfigurationGame;
   public controlGame = new Game();
   private idUser:number | undefined;
-  public gainBetUser:number = 0;
+  public gainBetUser = 0;
   
   constructor(
     private _gameService:GameService,
@@ -104,7 +104,7 @@ export class BetSlipComponent implements OnInit {
    */
   saveBet(){
     if(!this.controlGame.control.endBet) return;
-    this._gameService.saveGame( this.idUser!, this.controlGame.control ).subscribe(( game:ControlGame ) =>{
+    this._gameService.saveGame( this.idUser ?? 0, this.controlGame.control ).subscribe(( game:ControlGame ) =>{
       if(game.state){
         const valueBet = (this.gainBetUser+this.configGame.gainBet);
         this.updateUser({ id:this.idUser,accumulatedValue:valueBet });
@@ -127,10 +127,12 @@ export class BetSlipComponent implements OnInit {
         this.idUser = user.id;
       });
     } else {
-      this._userService.getUser(localStorage.getItem('token')!).subscribe( (user:User[])=>{
-        this.idUser = user[0].id;
-        this.gainBetUser = user[0].accumulatedValue;
-        this.accumulatedValue.emit(user[0].accumulatedValue);
+      this._userService.getUser(localStorage.getItem('token') ?? "").subscribe( (user:User[])=>{
+        if(user[0]){
+          this.idUser = user[0].id;
+          this.gainBetUser = user[0].accumulatedValue;
+          this.accumulatedValue.emit(user[0].accumulatedValue);
+        }
       });
     }
   }

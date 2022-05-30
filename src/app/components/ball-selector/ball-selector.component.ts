@@ -12,7 +12,7 @@ export class BallSelectorComponent {
 
   ballEvent: EventEmitter<Ball> = new EventEmitter<Ball>();
   balls:Ball[] = [];
-  accumulated:number = 0;
+  accumulated = 0;
 
   constructor(
     private _gameService:GameService,
@@ -51,7 +51,7 @@ export class BallSelectorComponent {
    * Load the data of the user who currently has a token saved in the storage
    */
   getUser(){
-    this._userService.getUser(localStorage.getItem('token')!).subscribe( (user:User[])=>{
+    this._userService.getUser( localStorage.getItem('token') ?? "" ).subscribe( (user:User[])=>{
       this.accumulated = (user[0]) ? user[0].accumulatedValue : 0;
     });
   }
