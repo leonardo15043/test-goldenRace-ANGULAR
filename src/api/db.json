@@ -99,6 +99,27 @@
       },
       "idUser": 6,
       "id": 5
+    },
+    {
+      "startCountBet": false,
+      "endBet": true,
+      "isSubmit": true,
+      "state": false,
+      "gainBet": 0,
+      "count": 2,
+      "selectBall": {
+        "id": 5,
+        "value": 5,
+        "color": "#f3c465"
+      },
+      "interval": 68,
+      "ballBet": {
+        "id": 2,
+        "value": 2,
+        "color": "#ffe4ab"
+      },
+      "idUser": 6,
+      "id": 6
     }
   ],
   "users": [
